@@ -1,12 +1,17 @@
 plugins {
-    id 'java'
-    id 'xyz.jpenilla.run-paper' version '2.3.0'
+    id("java-library")
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = 'com.mrbysco'
 version = "${version}"
 base {
     archivesName = "${mod_name}"
+}
+
+java {
+    // Configure the java toolchain. This allows gradle to auto-provision JDK 21 on systems that only have JDK 11 installed for example.
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
 repositories {
@@ -18,24 +23,23 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:${paper_version}")
+    compileOnly "io.papermc.paper:paper-api:${mc_version}-${paper_version}"
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+tasks {
+    compileJava {
+        options.release = 21
+    }
+    runServer {
+        minecraftVersion("${mc_version}")
+    }
 }
 
 processResources {
     def props = [version: version]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
-    }
-}
-
-tasks {
-    runServer {
-        minecraftVersion("1.20.6")
+    getInputs().properties(props)
+    filteringCharset("UTF-8")
+    filesMatching("plugin.yml") {
+        expand(props)
     }
 }
