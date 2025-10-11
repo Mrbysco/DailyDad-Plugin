@@ -20,18 +20,21 @@ public final class DailyDadPlugin extends JavaPlugin {
 	public static boolean jokeUponRespawn = false;
 	public static ChatColor jokeColor = ChatColor.WHITE;
 	public static List<String> internal_dadabase = new ArrayList<>();
+    public static String prefix = "§6<DailyDad> §r";
 
 	@Override
 	public void onEnable() {
 		config.addDefault("internal_dadabase", Arrays.stream(DadAbase.internal_dadabase).toList());
 		config.addDefault("jokeUponRespawn", false);
 		config.addDefault("jokeColor", "f");
+        config.addDefault("prefix", "§6<DailyDad> §r");
 		config.options().copyDefaults(true);
 		saveConfig();
 
 		jokeUponRespawn = config.getBoolean("jokeUponRespawn");
 		internal_dadabase = config.getStringList("internal_dadabase");
 		jokeColor = ChatColor.getByChar(config.getString("jokeColor"));
+        prefix = config.getString("prefix");
 
 		getServer().getPluginManager().registerEvents(new EventHandlers(), this);
 
