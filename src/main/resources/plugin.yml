@@ -1,7 +1,7 @@
 name: DailyDad
 version: '${version}'
 main: com.mrbysco.dailydad.DailyDadPlugin
-api-version: 1.18
+api-version: 1.20
 author: "Mrbysco"
 description: "Sometimes I tell dad jokes. Sometimes he laughs at them"
 website: "https://www.curseforge.com/minecraft/bukkit-plugins/daily-dad-plugin"

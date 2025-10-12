@@ -1,58 +1,45 @@
 plugins {
-    id 'java'
-    id 'xyz.jpenilla.run-paper' version '2.0.0'
+    id("java-library")
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = 'com.mrbysco'
 version = "${version}"
-archivesBaseName = "${mod_name}"
+base {
+    archivesName = "${mod_name}"
+}
+
+java {
+    // Configure the java toolchain. This allows gradle to auto-provision JDK 21 on systems that only have JDK 11 installed for example.
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
 
 repositories {
     mavenCentral()
     maven {
-        name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
-    }
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
+        name "PaperMC"
+        url "https://repo.papermc.io/repository/maven-public/"
     }
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:${paper_version}"
+    compileOnly "io.papermc.paper:paper-api:${mc_version}-${paper_version}"
 }
 
 tasks {
+    compileJava {
+        options.release = 21
+    }
     runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.18.2")
-    }
-}
-
-def targetJavaVersion = 17
-java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
+        minecraftVersion("${mc_version}")
     }
 }
 
 processResources {
     def props = [version: version]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
+    getInputs().properties(props)
+    filteringCharset("UTF-8")
+    filesMatching("plugin.yml") {
+        expand(props)
     }
 }

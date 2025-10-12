@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public final class DailyDadPlugin extends JavaPlugin {
 	public static final Logger LOGGER = LoggerFactory.getLogger("DailyDad");
@@ -33,8 +34,8 @@ public final class DailyDadPlugin extends JavaPlugin {
 
 		jokeUponRespawn = config.getBoolean("jokeUponRespawn");
 		internal_dadabase = config.getStringList("internal_dadabase");
-		jokeColor = ChatColor.getByChar(config.getString("jokeColor"));
-        prefix = config.getString("prefix");
+		jokeColor = ChatColor.getByChar(Objects.requireNonNull(config.getString("jokeColor")));
+    prefix = config.getString("prefix");
 
 		getServer().getPluginManager().registerEvents(new EventHandlers(), this);
 
