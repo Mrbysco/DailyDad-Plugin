@@ -82,7 +82,7 @@ public class DadAbase {
 	}
 
 	public static TextComponent generateChatFormattedJoke(String joke) {
-		TextComponent component = new TextComponent(ChatColor.GOLD + "<DailyDad> " + ChatColor.RESET);
+		TextComponent component = new TextComponent(DailyDadPlugin.prefix);
 
 
 		String[] lines = joke.split("\\R");
