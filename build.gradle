@@ -1,13 +1,14 @@
 plugins {
-    id("java-library")
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'java'
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 group = 'com.mrbysco'
-version = "${version}"
+version = plugin_version
 base {
     archivesName = "${mod_name}"
 }
+description = "A paper plugin that allows clients to use Armor Poser to pose armor stands"
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 21 on systems that only have JDK 11 installed for example.
@@ -15,15 +16,14 @@ java {
 }
 
 repositories {
-    mavenCentral()
     maven {
-        name "PaperMC"
-        url "https://repo.papermc.io/repository/maven-public/"
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:${mc_version}-${paper_version}"
+    compileOnly "io.papermc.paper:paper-api:${paper_version}"
 }
 
 tasks {
@@ -32,14 +32,15 @@ tasks {
     }
     runServer {
         minecraftVersion("${mc_version}")
+        jvmArgs("-Xms2G", "-Xmx2G")
     }
 }
 
 processResources {
-    def props = [version: version]
+    def props = [plugin_version: plugin_version]
     getInputs().properties(props)
     filteringCharset("UTF-8")
-    filesMatching("plugin.yml") {
+    filesMatching(["plugin.yml", "paper-plugin.yml"]) {
         expand(props)
     }
 }
