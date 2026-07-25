@@ -4,7 +4,6 @@ import com.mrbysco.dailydad.DailyDadPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.ChatColor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -83,12 +82,12 @@ public class DadAbase {
 	}
 
 	public static TextComponent generateChatFormattedJoke(String joke) {
-		TextComponent component = Component.text("<DailyDad> ").color(NamedTextColor.GOLD);
+		TextComponent component = Component.text(String.format("<%s> ", DailyDadPlugin.name)).color(NamedTextColor.GOLD);
 
 
 		String[] lines = joke.split("\\R");
 		for (int i = 0; i < lines.length; i++) {
-			component = component.append(Component.text(DailyDadPlugin.jokeColor + (lines[i] + (i != lines.length - 1 ? "\n" : ""))));
+			component = component.append(Component.text((lines[i] + (i != lines.length - 1 ? "\n" : ""))).color(DailyDadPlugin.jokeColor));
 		}
 
 		return component;
