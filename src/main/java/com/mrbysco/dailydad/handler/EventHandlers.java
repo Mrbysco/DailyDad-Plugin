@@ -14,7 +14,7 @@ public class EventHandlers implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		DadAbase.getJokeAsync((joke, chatFormatted) -> {
-			player.sendMessage(chatFormatted.toLegacyText());
+			player.sendMessage(chatFormatted);
 		});
 	}
 
@@ -23,7 +23,7 @@ public class EventHandlers implements Listener {
 		Player player = event.getPlayer();
 		if (DailyDadPlugin.jokeUponRespawn) {
 			DadAbase.getJokeAsync((joke, chatFormatted) -> {
-				player.sendMessage(chatFormatted.toLegacyText());
+				player.sendMessage(chatFormatted);
 			});
 		}
 	}

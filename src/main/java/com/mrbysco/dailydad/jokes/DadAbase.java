@@ -1,8 +1,9 @@
 package com.mrbysco.dailydad.jokes;
 
 import com.mrbysco.dailydad.DailyDadPlugin;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 
 import java.io.ByteArrayOutputStream;
@@ -82,12 +83,12 @@ public class DadAbase {
 	}
 
 	public static TextComponent generateChatFormattedJoke(String joke) {
-		TextComponent component = new TextComponent(ChatColor.GOLD + "<DailyDad> " + ChatColor.RESET);
+		TextComponent component = Component.text("<DailyDad> ").color(NamedTextColor.GOLD);
 
 
 		String[] lines = joke.split("\\R");
 		for (int i = 0; i < lines.length; i++) {
-			component.addExtra(new TextComponent(DailyDadPlugin.jokeColor + (lines[i] + (i != lines.length - 1 ? "\n" : "")) + ChatColor.RESET));
+			component = component.append(Component.text(DailyDadPlugin.jokeColor + (lines[i] + (i != lines.length - 1 ? "\n" : ""))));
 		}
 
 		return component;
@@ -122,6 +123,6 @@ public class DadAbase {
 	}
 
 	public interface JokeResolved {
-		void onResolve(String joke, BaseComponent chatFormatted);
+		void onResolve(String joke, TextComponent chatFormatted);
 	}
 }
