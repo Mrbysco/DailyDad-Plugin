@@ -73,6 +73,6 @@ if (System.getenv().MODRINTH_KEY) {
         uploadFile = publishJar
         changelog = file("$project.rootDir/changelog.md").text
         gameVersions = ["${mc_version}"]
-        loaders = ["foila", "paper", "purpur"]
+        loaders = ["folia", "paper", "purpur"]
     }
 }
